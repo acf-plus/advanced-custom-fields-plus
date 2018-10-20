@@ -1,0 +1,56 @@
+# Include your project-specific ignores in this file
+# Read about how to use .gitignore: https://help.github.com/articles/ignoring-files
+
+# Project
+.cache-loader
+
+# Editors
+project.xml
+project.properties
+/nbproject/private/
+.buildpath
+.project
+.settings*
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.sublimelinterrc
+
+# Node/Yarn/NPM
+/node_modules/
+none
+npm-debug.log
+yarn-error.log
+
+# Sass
+.sass-cache/
+
+# OS X metadata
+.DS_Store
+
+# Windows junk
+Thumbs.db
+
+# Behat/CLI Tests
+tests/cli/installer
+tests/cli/composer.phar
+tests/cli/composer.lock
+tests/cli/composer.json
+tests/cli/vendor
+
+# Unit tests
+/tmp
+/tests/bin/tmp
+/tests/e2e-tests/config/local-*.json
+/tests/e2e-tests/config/local.json
+
+# Logs
+/logs
+
+# Composer
+/vendor/
+contributors.md
+
+# Screenshots for e2e tests failures
+/screenshots/

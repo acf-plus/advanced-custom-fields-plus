@@ -1,0 +1,59 @@
+{
+  "name": "Advanced Custom Fields Plus",
+  "description": "A custom ACF plugin boilerplate",
+  "homepage": "https://acf.plus/",
+  "type": "wordpress-plugin",
+  "license": "GPL-3.0",
+  "authors": [
+    {
+      "name": "Dima Minka",
+      "email": "info@acf.plus"
+    }
+  ],
+  "keywords": [
+    "wordpress",
+    "acf",
+    "plugin",
+    "cdk"
+  ],
+  "support": {
+    "issues": "https://github.com/acf-plus/advanced-custom-fields-plus/issues",
+    "forum": "https://github.com/acf-plus/advanced-custom-fields-plus/issues"
+  },
+  "autoload": {
+    "psr-4": {
+      "ACF\\ACFPLUS\\": "lib/"
+    }
+  },
+  "require": {
+    "php": ">=7.1",
+    "composer/installers": "~1.0",
+    "stoutlogic/acf-builder": "^1.8"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.3.2",
+    "wp-coding-standards/wpcs": "^1.1.0",
+    "wimg/php-compatibility": "^9.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.4.3",
+    "jakub-onderka/php-parallel-lint": "^1.0",
+    "jakub-onderka/php-var-dump-check": "^0.2.0"
+  },
+  "scripts": {
+    "test": [
+      "phpcs -s -p && parallel-lint --exclude vendor . && var-dump-check --exclude vendor."
+    ],
+    "phpcs": [
+      "phpcs -s -p"
+    ],
+    "phpcbf": [
+      "phpcbf -p"
+    ]
+  },
+  "extra": {
+    "scripts-description": {
+      "test": "Run phpcs, parallel-lint, var-dump-check",
+      "phpcs": "Analyze code against the WordPress coding standards with PHP_CodeSniffer",
+      "phpcbf": "Fix coding standards warnings/errors automatically with PHP Code Beautifier"
+    }
+  }
+}
