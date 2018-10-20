@@ -1,5 +1,5 @@
 {
-  "name": "advanced-custom-fields-plus",
+  "name": "acf-plus/advanced-custom-fields-plus",
   "description": "A custom ACF plugin boilerplate",
   "homepage": "https://acf.plus/",
   "type": "wordpress-plugin",
