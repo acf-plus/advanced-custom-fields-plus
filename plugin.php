@@ -58,6 +58,17 @@ if ( ! file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 }
 
 /**
+ * Displays a message that Advance Custom Fields/Ultimate Fields is needed for the theme.
+ */
+function acf_plus_checker() {
+	if ( ! class_exists( 'acf' ) ) {
+		$message = __( 'Please install and activate Advanced Custom Fields', 'acf_plus' );
+		printf( '<div class="notice notice-error"><p>%s</p></div>', esc_attr( $message ) );
+	}
+}
+add_action( 'admin_notices', 'acf_plus_checker' );
+
+/**
  * The code that runs during plugin activation
  */
 register_activation_hook(
