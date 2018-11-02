@@ -15,7 +15,7 @@
  * Author URI:        https://acf.plus
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       acf-plus
+ * Text Domain:       acf_plus
  * Domain Path:       /
  */
 
@@ -24,11 +24,36 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+/**
+ * Helper function for prettying up errors
+ *
+ * @param string $message
+ * @param string $subtitle
+ * @param string $title
+ */
+$acf_error = function ( $message, $subtitle = '', $title = '' ) {
+	$title   = $title ?: __( 'ACF &rsaquo; Error', 'acf_plus' );
+	$footer  = '<a href="https://acf.plus/">acf.plus</a>';
+	$message = "<h1>{$title}<br><small>{$subtitle}</small></h1><p>{$message}</p><p>{$footer}</p>";
+	wp_die( wp_kses_post( $message ), esc_attr( $title ) );
+};
 
 /**
- * Require once the Composer Autoload
+ * Ensure compatible version of PHP is used
  */
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+if ( version_compare( '7.1', phpversion(), '>=' ) ) {
+	$acf_error( __( 'You must be using PHP 7.1 or greater.', 'acf_plus' ), __( 'Invalid PHP version', 'acf_plus' ) );
+}
+
+/**
+ * Ensure dependencies are loaded
+ */
+
+if ( ! file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
+	$acf_error(
+		__( 'You must run <code>composer install</code> from the ACF Plus directory.', 'acf_plus' )
+	);
+} elseif ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
 
@@ -37,7 +62,7 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
  */
 register_activation_hook(
 	__FILE__,
-	function() {
+	function () {
 
 		ACF\ACFPLUS\Activate::activate();
 
@@ -49,7 +74,7 @@ register_activation_hook(
  */
 register_deactivation_hook(
 	__FILE__,
-	function() {
+	function () {
 
 		ACF\ACFPLUS\Deactivate::deactivate();
 

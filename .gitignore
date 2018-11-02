@@ -3,6 +3,7 @@
 
 # Project
 .cache-loader
+dist
 
 # Editors
 project.xml
