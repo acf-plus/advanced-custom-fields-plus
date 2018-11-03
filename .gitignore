@@ -4,6 +4,8 @@
 # Project
 .cache-loader
 dist
+lib/modules/*
+!lib/modules/acf_event
 
 # Editors
 project.xml
