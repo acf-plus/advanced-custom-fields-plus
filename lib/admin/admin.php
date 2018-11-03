@@ -7,6 +7,7 @@
 
 namespace ACF\ACFPLUS\Admin;
 
+use ACF\ACFPLUS\Admin\Callbacks\AcfPlusOptions;
 use ACF\ACFPLUS\Admin\Callbacks\AdminCallbacks;
 
 /**
@@ -52,6 +53,7 @@ class Admin {
 		$this->version     = $version;
 
 		$this->callbacks = new AdminCallbacks();
+		$this->callbacks = new AcfPlusOptions();
 
 	}
 
