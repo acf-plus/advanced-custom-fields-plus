@@ -10,11 +10,58 @@ let mix = require('laravel-mix');
  | file for your application, as well as bundling up your JS files.
  |
  */
+mix.setPublicPath("./");
+
+if(mix.inProduction()) {
+	mix.options({
+		uglify: {
+			uglifyOptions: {
+				compress: {
+					drop_console: true
+				}
+			}
+		}
+	});
+}
+
+mix.webpackConfig({
+	resolve: {
+		modules: [
+			'node_modules'
+		],
+		enforceExtension: false
+	}
+});
+
+mix.autoload({
+	'jquery': ['$', 'window.jQuery', 'jQuery']
+});
 
 mix.js('src/scripts/admin.js', 'dist/')
 	.js('src/scripts/main.js','dist/')
 	.sass('src/styles/admin.scss', 'dist/')
-	.sass('src/styles/main.scss', 'dist/');
+	.options({
+		processCssUrls: false
+	})
+	.sass('src/styles/main.scss', 'dist/')
+	.options({
+		processCssUrls: false
+	})
+	.copyDirectory('src/fonts', 'dist/fonts')
+	.copyDirectory('src/images', 'dist/images');
+
+mix.browserSync({
+	proxy: 'http://acf.test',
+
+	delay: 500,
+	open: false,
+	files: [
+		'dist/*.js',
+		'dist/*.css'
+	]
+});
+
+mix.disableSuccessNotifications();
 
 // Full API
 // mix.js(src, output);
@@ -50,3 +97,4 @@ mix.js('src/scripts/admin.js', 'dist/')
 //   uglify: {}, // Uglify-specific options. https://webpack.github.io/docs/list-of-plugins.html#uglifyjsplugin
 //   postCss: [] // Post-CSS options: https://github.com/postcss/postcss/blob/master/docs/plugins.md
 // });
+
