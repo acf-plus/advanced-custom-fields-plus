@@ -17,7 +17,16 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "browser-sync-webpack-plugin": "2.0.1",
     "laravel-mix": "^2.1.0",
     "rimraf": "~2.6"
+  },
+  "dependencies": {
+    "es6-promise": "^4.2.5",
+    "jquery": "^1.12.4",
+    "magnific-popup": "^1.1.0",
+    "object-fit-images": "^3.2.4",
+    "scut": "^1.4.0"
   }
 }

@@ -1,0 +1,190 @@
+/*
+  This mixin can be used to set the object-fit:
+  @include object-fit(contain);
+  or object-fit and object-position:
+  @include object-fit(cover, top);
+*/
+@mixin object-fit($fit: fill, $position: null) {
+  -o-object-fit: $fit;
+  object-fit: $fit;
+  @if $position {
+    -o-object-position: $position;
+    object-position: $position;
+    font-family: 'object-fit: #{$fit}; object-position: #{$position}';
+  } @else {
+    font-family: 'object-fit: #{$fit}';
+  }
+}
+
+@mixin media($min-query: null, $max-query: null) {
+  @if $min-query == null and $max-query == null {
+    @warn "Mixin k-media() received two null values; no output.";
+    @content; // Pass content anyway, but it won't be wrapped in a media query
+  }
+  @else if $max-query == null {
+    @media screen and (min-width: $min-query+0px) { @content; }
+  }
+  @else if $min-query == null {
+    @media screen and (max-width: $max-query+0px) { @content; }
+  }
+  @else {
+    @media screen and (min-width: $min-query+0px) and (max-width: $max-query+0px) { @content; }
+  }
+}
+
+/**
+ * @mixin media-above
+ * @section Media Query Mixins
+ * @param $min-query Min media query
+ *
+ * @example
+ *  @include media-above(1024px)
+ */
+
+@mixin media-above($min-query) {
+  @include media($min-query, null) { @content; }
+}
+
+/**
+ * @mixin media-below
+ * @section Media Query Mixins
+ * @param $max-query Min media query
+ *
+ * @example
+ *  @include media-below(1024px)
+ */
+
+@mixin media-below($max-query) {
+  @include media(null, $max-query - 1) { @content; }
+}
+
+/**
+ * @mixin media-between
+ * @section Media Query Mixins
+ * @param $min-query Min media query
+ * @param $max-query Max media query
+ *
+ * @example
+ *  @include media-between(320px, 1024px)
+ */
+
+@mixin media-between($min-query: null, $max-query: null) {
+  @if $min-query == null or $max-query == null {
+    @warn "Mixin media-between() received a null value."
+  }
+  @include media($min-query, $max-query - 1) { @content; }
+}
+
+
+@mixin burger($width: 30px, $height: 5px, $gutter: 3px, $color: #000, $border-radius: 0, $transition-duration: .3s) {
+  $burger-height: $height !global;
+  $burger-gutter: $gutter !global;
+
+  position: relative;
+  margin-top: $height + $gutter;
+  margin-bottom: $height + $gutter;
+  user-select: none;
+
+  &, &::before, &::after {
+    display: block;
+    width: $width;
+    height: $height;
+    background-color: $color;
+    @if $border-radius != 0 {
+      border-radius: $border-radius;
+    }
+
+    transition-property: background-color, transform;
+    transition-duration: $transition-duration;
+  }
+
+  &::before, &::after {
+    position: absolute;
+    content: "";
+  }
+
+  &::before {
+    top: -($height + $gutter);
+  }
+
+  &::after {
+    top: $height + $gutter;
+  }
+}
+
+// Burger animations
+@mixin burger-to-cross($color: auto) {
+  & {
+    background-color: transparent;
+  }
+  @if ($color != auto) {
+    &::before, &::after {
+      background-color: $color;
+    }
+  }
+  &::before {
+
+    transform: translateY($burger-gutter + $burger-height) rotate(225deg);
+  }
+  &::after {
+
+    transform: translateY(-($burger-gutter + $burger-height)) rotate(-225deg);
+  }
+}
+
+//Font-face mixin
+@function cdk-main-src($formats, $file-path, $font-family, $unicode-range) {
+  // Return the list of `src` values, in order, that
+  // a good `@font-face` will need, including only
+  // those formats specified in the list `$formats`.
+  $result: ();
+  @if index($formats, eot) {
+    $eot-val: url('#{$file-path}.eot?#iefix') format('embedded-opentype');
+    $result: append($result, $eot-val, comma);
+  }
+  @if index($formats, woff2) {
+    $woff2-val: url('#{$file-path}.woff2') format('woff2');
+    $result: append($result, $woff2-val, comma);
+  }
+  @if index($formats, woff) {
+    $woff-val: url('#{$file-path}.woff') format('woff');
+    $result: append($result, $woff-val, comma);
+  }
+  @if index($formats, ttf) {
+    $ttf-val: url('#{$file-path}.ttf') format('truetype');
+    $result: append($result, $ttf-val, comma);
+  }
+  @if index($formats, svg) {
+    $svg-val: url('#{$file-path}.svg##{$font-family}') format('svg');
+    $result: append($result, $svg-val, comma);
+  }
+  @return $result;
+}
+
+@mixin cdk-font-face (
+  $font-family,
+  $file-path,
+  $weight: normal,
+  $style: normal,
+  $formats: eot woff2 woff ttf svg,
+  $unicode-range: U+0000-00FF U+0131 U+0152-0153 U+02BB-02BC U+02C6 U+02DA U+02DC U+2000-206F U+2074 U+20AC U+2122 U+2191 U+2193 U+2212 U+2215 U+FEFF U+FFFD
+) {
+
+  @if index('italic' 'oblique', $weight) {
+    $style: $weight;
+    $weight: normal;
+  }
+
+  @font-face {
+    font-family: $font-family;
+    font-weight: $weight;
+    font-style: $style;
+    unicode-range: $unicode-range;
+
+    @if index($formats, eot) {
+      src: url('#{$file-path}.eot');
+    }
+    src: cdk-main-src($formats, $file-path, $font-family, $unicode-range);
+  }
+
+}

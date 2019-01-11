@@ -1,0 +1,61 @@
+html {
+	box-sizing: border-box;
+	font-size: 100%;
+	overflow-x: hidden;
+}
+
+*,
+*:before,
+*:after {
+	box-sizing: inherit;
+}
+
+body {
+	min-height: 100vh;
+	min-width: scut-em(320);
+	overflow-x: hidden;
+	font-family: $font-r;
+	font-size: 100%;
+	padding: 0;
+	margin: 0;
+
+	&.admin-bar {
+		.wrapper {
+			margin-top: 0;
+		}
+
+		.header {
+			top: 32px;
+		}
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		font-size: inherit;
+	}
+}
+
+input[type=submit],
+button,
+a {
+	cursor: pointer;
+}
+
+.container {
+	margin: 0 auto;
+	padding: 0 scut-rem(10);
+}
+
+img {
+	max-width: 100%;
+}
+
+a,
+input[type=submit],
+button,
+path,
+polygon,
+circle,
+rect {
+	outline: none;
+	transition: all $hover-time ease-in;
+}
