@@ -1,3 +1,5 @@
+window.$ = window.jQuery;
+
 // import external dependencies
 import objectFitImages from 'object-fit-images';
 
