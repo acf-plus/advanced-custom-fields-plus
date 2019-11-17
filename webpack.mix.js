@@ -1,4 +1,5 @@
-let mix = require('laravel-mix');
+const mix = require('laravel-mix');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 
 /*
  |--------------------------------------------------------------------------
@@ -30,11 +31,18 @@ mix.webpackConfig({
 			'node_modules'
 		],
 		enforceExtension: false
-	}
-});
-
-mix.autoload({
-	'jquery': ['$', 'window.jQuery', 'jQuery']
+	},
+	plugins: [
+		new HtmlWebpackExternalsPlugin({
+			externals: [
+				{
+					module: 'jquery',
+					entry:  '../../../../../wp/wp-includes/js/jquery/jquery.js',
+					global: 'jQuery',
+				}
+			],
+		}),
+	]
 });
 
 mix.js('src/scripts/admin.js', 'dist/')
