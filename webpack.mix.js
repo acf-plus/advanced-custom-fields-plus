@@ -15,8 +15,8 @@ mix.setPublicPath("./");
 
 if(mix.inProduction()) {
 	mix.options({
-		uglify: {
-			uglifyOptions: {
+		terser: {
+			terserOptions: {
 				compress: {
 					drop_console: true
 				}
